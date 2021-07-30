@@ -20,20 +20,16 @@ model_collumns_file_name = '%s/model_columns.pkl' % model_directory
 def home():
     return "Alive"
 
-
 # Post request that receives the data of a house in JSON format and returns the prediction
 @app.route('/predict', methods=['POST'])
 def predict():
     if regressor:
         try:
-            data = request.json  # Take all available entries
-            data_df = pd.get_dummies(pd.DataFrame(data)) #Create a df from it with dummy variables for categorical data
+            json_ = request.json  # Take all available entries
 
-            data_df = data_df.reindex(columns=model_columns, fill_value=0) #Convert column names to model's column names
-            data_df.get("Living area", None)
-            data_df.get("Bedroom", None)
-
-            prediction = list(regressor.predict(data_df)) #Prediction
+            query = pd.get_dummies(pd.DataFrame(json_)) #Create a df from it with dummy variables for categorical data
+            query = query.reindex(columns=model_columns, fill_value=0) #Convert column names to model's column names
+            prediction = list(regressor.predict(query)) #Prediction
             return jsonify({'prediction': list(prediction)}) #Return the result of prediction
 
         except Exception as e:
@@ -63,11 +59,9 @@ def str_format():
                   " 'terrace-area': Optional[int]," \
                   " 'garden': Optional['Yes','No'], " \
                   " 'garden-area: Optional[int]," \
-                  "'facade-number': Optional[int]" \
+                  " 'facade-number': Optional[int]" \
                   " 'building-condition' : Optional['As New'|'Good'|'Just renovated'|'To be done up'|'To renovate'|'To restore']"
     return explanation
-
-
 if __name__ == '__main__':
     try:
         regressor = joblib.load(model_file_name)

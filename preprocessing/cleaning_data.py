@@ -86,7 +86,7 @@ def preprocessing():
     df.columns.values[72] = 'Swimmingpool_Yes'
     #
     #
-    # #Correct the data types for dummie variables
+    # #Correct the data types for dummy variables
     df.iloc[:, 18:] = df.iloc[:, 18:].astype(int)
 
 

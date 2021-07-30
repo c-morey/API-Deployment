@@ -79,4 +79,5 @@ if __name__ == '__main__':
         print(str(e))
         regressor = None
     port = int(os.environ.get('PORT', 5000))
+    print("Port:",port)
     app.run(host="0.0.0.0", threaded=True, port=port)
