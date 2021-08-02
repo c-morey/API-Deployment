@@ -10,7 +10,7 @@ COPY requirements.txt requirements.txt
 
 RUN pip3 install -r requirements.txt
 
-COPY . /app
+COPY python-docker /app
 
 CMD [ "python3", "app.py"]
 
