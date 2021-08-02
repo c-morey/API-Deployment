@@ -1,4 +1,4 @@
-#import libraries
+# import libraries
 import pandas as pd
 import numpy as np
 
@@ -13,10 +13,13 @@ import seaborn as sns
 import joblib
 from pathlib import Path
 
+
 class Model():
     def __init__(self, model_directory):
-        self.df = pd.read_csv('/Users/cerenmorey/Desktop/BeCode/becode_projects/immolisa_scrapped_data - final_vers.csv')
+        self.df = pd.read_csv(
+            '/Users/cerenmorey/Desktop/BeCode/becode_projects/immolisa_scrapped_data - final_vers.csv')
         self.model_path = Path(model_directory)
+        self.poly_features_model_path = Path(model_directory)
         if self.model_path.is_file():
             self.model_column_path = self.model_path.parent.joinpath("model_columns.pkl")
         else:
@@ -136,8 +139,9 @@ class Model():
     def save_model(self):
         # save the model
         model_path = joblib.dump(self.model, 'model/model.pkl')[0]
+        poly_features_model_path = joblib.dump(self.poly_features, 'model/polynomial_features_model')[0]
         print("Model saved")
-        return model_path
+        return model_path, poly_features_model_path
 
     def save_model_columns(self):
         # Saving the data columns from training
@@ -149,4 +153,3 @@ class Model():
 # model = Model(model_directory)
 # model_file_name = model.model_path.name
 # model_columns_file_name = model.model_column_path.name
-

@@ -24,16 +24,17 @@ def predict():
             json_ = request.json  # Take all available entries
             json_ = preprocess(json_[0]) #preprocess the json file
             query = pd.DataFrame(json_)
-            query = query.reindex(columns=model_columns, fill_value=0) #Convert column names to model's column names
-            prediction = list(regressor.predict(query)) #Prediction
-            return jsonify({'prediction': list(prediction)}) #Return the result of prediction
+            query = query.reindex(columns=model_columns, fill_value=0)
+            #Convert column names to model's column names
+            X_val_prep = load_poly.transform(query)
+            prediction = list(regressor.predict(X_val_prep)) #Prediction
+            return jsonify({'Prediction Price': list(prediction)}) #Return the result of prediction
 
         except Exception as e:
             return jsonify({'Error': str(e), "trace": traceback.format_exc()})
 
         except ValueError as err:
             return jsonify({'Error': str(err.args), "trace": traceback.format_exc()})
-
     else:
         print("Train the dataset first")
         return "No model found here!"
@@ -89,10 +90,14 @@ if __name__ == '__main__':
         model_file_path = model.model_path
         model_columns_file_path = model.model_column_path
 
+        load_poly = joblib.load('/Users/cerenmorey/PycharmProjects/API-Deployment/model/poly_features.pkl')
+        print("Poly features loaded")
+
         regressor = joblib.load(model_file_path)
         print("Model loaded")
         model_columns = joblib.load(model_columns_file_path)
         print("Model columns loaded")
+
 
     except Exception as e:
         print("No model found here! Need to train first.")
