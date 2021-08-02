@@ -8,8 +8,6 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import ElasticNetCV
 from sklearn.metrics import mean_absolute_error, r2_score
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 from pathlib import Path
 
