@@ -1,3 +1,4 @@
+import json
 import os
 import traceback
 
@@ -43,11 +44,19 @@ def predict():
 def str_format():
 
     dict_of_expected_outcome = {
-        "Living area": {'type': int,'optional':False,'default': []},
-        "Property Type": {'type': str, 'optional': False, 'default': ['Apartment','House']},
+        "Living area": {'type': 'int','optional':False,'default': []},
+        "Bedroom": {'type': 'int', 'optional': False, 'default': []},
+        "Province": {
+            'type': 'str',
+            'optional': True,
+            'default': [
+                'Brussels', 'Oost-vlaanderen', 'Vlaams-brabant', 'Luik', 'Namen',
+                'Luxemburg', 'West-vlaanderen', 'Antwerpen', 'Henegouwen',
+                'Waals-brabant', 'Limburg']},
+        "Property Type": {'type': 'str', 'optional': True, 'default': ['Apartment','House']},
         "Property Subtype": {
-            'type': str,
-            'optional': False,
+            'type': 'str',
+            'optional': True,
             'default': [
                 'Apartment', 'Town-house', 'House', 'Villa', 'Penthouse',
                 'Mansion', 'Studio', 'Exceptional property', 'Kot', 'Duplex',
@@ -55,29 +64,23 @@ def str_format():
                 'Service flat', 'Castle', 'Farmhouse', 'Country house',
                 'Manor house', 'Other properties']
             },
-        "Bedroom": {'type': int, 'optional': False, 'default': []},
-        "Province": {'type': str, 'optional': False, 'default': ['Brussels']},
-        "Surface of the plot": {'type': int, 'optional': True, 'default': []},
-        "HasGarden": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Garden surface": {'type': int, 'optional': True, 'default': []},
+        "Surface of the plot": {'type': 'int', 'optional': True, 'default': []},
+        "HasGarden": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Garden surface": {'type': 'int', 'optional': True, 'default': []},
         "Kitchen Type": {
-            'type': str,
+            'type': 'str',
             'optional': True,
-            'default': ['Equipped', 'Semi-equipped', 'Not installed', 'Unknown']},
-        "Swimming pool": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Furnished": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "HasFireplace": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "HasTerrace": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Terrace surface": {'type': int, 'optional': True, 'default': []},
-        "Number of frontages": {'type': int, 'optional': True, 'default': []},
-        "Building condition": {'type': str, 'optional': True, 'default': ["As new","Good","To renovate"]}
+            'default': ['Equipped', 'Semi-equipped', 'Not installed']},
+        "Swimming pool": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Furnished": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "HasFireplace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "HasTerrace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Terrace surface": {'type': 'int', 'optional': True, 'default': []},
+        "Number of frontages": {'type': 'int', 'optional': True, 'default': []},
+        "Building condition": {'type': 'str', 'optional': True, 'default': ['As new','Good','To renovate']}
     }
-    ...
-    for key, value in dict_of_expected_outcome.items():
-        print(f"{key}: {value}")
 
-    return (f"{key}: {value}")
-
+    return dict_of_expected_outcome
 
 if __name__ == '__main__':
     try:

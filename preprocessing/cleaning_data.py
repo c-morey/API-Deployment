@@ -4,11 +4,19 @@ import numpy as np
 
 def preprocess(json_data):
     dict_of_expected_outcome = {
-        "Living area": {'type': int,'optional':False,'default': []},
-        "Property Type": {'type': str, 'optional': False, 'default': ['Apartment','House']},
+        "Living area": {'type': 'int','optional':False,'default': []},
+        "Bedroom": {'type': 'int', 'optional': False, 'default': []},
+        "Province": {
+            'type': 'str',
+            'optional': True,
+            'default': [
+                'Brussels', 'Oost-vlaanderen', 'Vlaams-brabant', 'Luik', 'Namen',
+                'Luxemburg', 'West-vlaanderen', 'Antwerpen', 'Henegouwen',
+                'Waals-brabant', 'Limburg']},
+        "Property Type": {'type': 'str', 'optional': True, 'default': ['Apartment','House']},
         "Property Subtype": {
-            'type': str,
-            'optional': False,
+            'type': 'str',
+            'optional': True,
             'default': [
                 'Apartment', 'Town-house', 'House', 'Villa', 'Penthouse',
                 'Mansion', 'Studio', 'Exceptional property', 'Kot', 'Duplex',
@@ -16,23 +24,21 @@ def preprocess(json_data):
                 'Service flat', 'Castle', 'Farmhouse', 'Country house',
                 'Manor house', 'Other properties']
             },
-        "Bedroom": {'type': int, 'optional': False, 'default': []},
-        "Province": {'type': str, 'optional': False, 'default': ['Brussels']},
-        "Surface of the plot": {'type': int, 'optional': True, 'default': []},
-        "HasGarden": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Garden surface": {'type': int, 'optional': True, 'default': []},
+        "Surface of the plot": {'type': 'int', 'optional': True, 'default': []},
+        "HasGarden": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Garden surface": {'type': 'int', 'optional': True, 'default': []},
         "Kitchen Type": {
-            'type': str,
+            'type': 'str',
             'optional': True,
-            'default': ['Equipped', 'Semi-equipped', 'Not installed', 'Unknown']},
-        "Swimming pool": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Furnished": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "HasFireplace": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "HasTerrace": {'type': str, 'optional': True, 'default': ['Yes','No']},
-        "Terrace surface": {'type': int, 'optional': True, 'default': []},
-        "Number of frontages": {'type': int, 'optional': True, 'default': []},
-        "Building condition": {'type': str, 'optional': True, 'default': ["As new","Good","To renovate"]}
-      }
+            'default': ['Equipped', 'Semi-equipped', 'Not installed']},
+        "Swimming pool": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Furnished": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "HasFireplace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "HasTerrace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Terrace surface": {'type': 'int', 'optional': True, 'default': []},
+        "Number of frontages": {'type': 'int', 'optional': True, 'default': []},
+        "Building condition": {'type': 'str', 'optional': True, 'default': ['As new','Good','To renovate']}
+    }
 
     #Check if non-optional features are provided
     for feature in dict_of_expected_outcome.keys():
