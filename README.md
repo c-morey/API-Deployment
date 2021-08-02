@@ -1,7 +1,8 @@
-# A Flask-API for a Machine Learning Model: Predicting the Belgium Real Estate Prices
+# A Flask-API for a Prediction Model: Belgium Real Estate Prices
 
 This repository showcases a Flask application that creates predictions from a scikit-learn model for the real estates in Belgium. Once the Flask app is run, the presaved model returns the predicted price based on given features. If the model is not found, it will first train the given data, save it as a model, and then give a prediction. 
 
+The model is deployed to Heroku which then will be used by web-developers to embed it in their websites.
 
 
 ### Project Division: 
@@ -84,11 +85,7 @@ Returns an array of prediction based on given JSON objects representing the inde
 ```
 Sample output:
 ```
-{
-    "Prediction Price": [
-        326.41892486583856
-    ]
-}
+{ "Prediction Price": [ 326.41892486583856 ] }
 ```
 
 
