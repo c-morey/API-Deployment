@@ -1,19 +1,15 @@
-#import libraries
-import pandas as pd
-import numpy as np
-
 def preprocess(json_data):
     dict_of_expected_outcome = {
         "Living area": {'type': 'int','optional':False,'default': []},
         "Bedroom": {'type': 'int', 'optional': False, 'default': []},
         "Province": {
             'type': 'str',
-            'optional': True,
+            'optional': False,
             'default': [
                 'Brussels', 'Oost-vlaanderen', 'Vlaams-brabant', 'Luik', 'Namen',
                 'Luxemburg', 'West-vlaanderen', 'Antwerpen', 'Henegouwen',
                 'Waals-brabant', 'Limburg']},
-        "Property Type": {'type': 'str', 'optional': True, 'default': ['Apartment','House']},
+        "Property Type": {'type': 'str', 'optional': False, 'default': ['Apartment','House']},
         "Property Subtype": {
             'type': 'str',
             'optional': True,
