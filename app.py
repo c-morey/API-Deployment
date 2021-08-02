@@ -3,6 +3,7 @@ import os
 import traceback
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
 import joblib
 from model.model import Model
@@ -10,6 +11,7 @@ from preprocessing.cleaning_data import preprocess
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+CORS(app)
 
 
 @app.route('/', methods=['GET'])
@@ -83,6 +85,8 @@ def str_format():
 
     return dict_of_expected_outcome
 
+
+
 if __name__ == '__main__':
     try:
         model_directory = '/Users/cerenmorey/PycharmProjects/API-Deployment/model/model.pkl'
@@ -97,7 +101,6 @@ if __name__ == '__main__':
         print("Model loaded")
         model_columns = joblib.load(model_columns_file_path)
         print("Model columns loaded")
-
 
     except Exception as e:
         print("No model found here! Need to train first.")
