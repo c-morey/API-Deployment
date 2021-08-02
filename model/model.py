@@ -7,15 +7,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import ElasticNetCV
 from sklearn.metrics import mean_absolute_error, r2_score
-
 import joblib
 from pathlib import Path
 
 
 class Model():
     def __init__(self, model_directory):
-        self.df = pd.read_csv(
-            '/Users/cerenmorey/Desktop/BeCode/becode_projects/immolisa_scrapped_data - final_vers.csv')
+        self.df = pd.read_csv('.data/immo_scrapped_data.csv')
         self.model_path = Path(model_directory)
         self.poly_features_model_path = Path(model_directory)
         if self.model_path.is_file():
