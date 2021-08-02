@@ -18,19 +18,20 @@ CORS(app)
 def home():
     return "Alive!!"
 
+
 # Post request that receives the data of a house in JSON format and returns the prediction
 @app.route('/predict', methods=['POST'])
 def predict():
     if regressor:
         try:
             json_ = request.json  # Take all available entries
-            json_ = preprocess(json_[0]) #preprocess the json file
+            json_ = preprocess(json_[0])  # preprocess the json file
             query = pd.DataFrame(json_)
             query = query.reindex(columns=model_columns, fill_value=0)
-            #Convert column names to model's column names
+            # Convert column names to model's column names
             X_val_prep = load_poly.transform(query)
-            prediction = list(regressor.predict(X_val_prep)) #Prediction
-            return jsonify({'Prediction Price': list(prediction)}) #Return the result of prediction
+            prediction = list(regressor.predict(X_val_prep))  # Prediction
+            return jsonify({'Prediction Price': list(prediction)})  # Return the result of prediction
 
         except Exception as e:
             return jsonify({'Error': str(e), "trace": traceback.format_exc()})
@@ -45,9 +46,8 @@ def predict():
 # Get request returning the explanation of expected data and format
 @app.route('/predict', methods=['GET'])
 def str_format():
-
     dict_of_expected_outcome = {
-        "Living area": {'type': 'int','optional':False,'default': []},
+        "Living area": {'type': 'int', 'optional': False, 'default': []},
         "Bedroom": {'type': 'int', 'optional': False, 'default': []},
         "Province": {
             'type': 'str',
@@ -56,7 +56,7 @@ def str_format():
                 'Brussels', 'Oost-vlaanderen', 'Vlaams-brabant', 'Luik', 'Namen',
                 'Luxemburg', 'West-vlaanderen', 'Antwerpen', 'Henegouwen',
                 'Waals-brabant', 'Limburg']},
-        "Property Type": {'type': 'str', 'optional': False, 'default': ['Apartment','House']},
+        "Property Type": {'type': 'str', 'optional': False, 'default': ['Apartment', 'House']},
         "Property Subtype": {
             'type': 'str',
             'optional': True,
@@ -66,25 +66,24 @@ def str_format():
                 'Triplex', 'Ground floor', 'Bungalow', 'Loft', 'Chalet',
                 'Service flat', 'Castle', 'Farmhouse', 'Country house',
                 'Manor house', 'Other properties']
-            },
+        },
         "Surface of the plot": {'type': 'int', 'optional': True, 'default': []},
-        "HasGarden": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "HasGarden": {'type': 'str', 'optional': True, 'default': ['Yes', 'No']},
         "Garden surface": {'type': 'int', 'optional': True, 'default': []},
         "Kitchen Type": {
             'type': 'str',
             'optional': True,
             'default': ['Equipped', 'Semi-equipped', 'Not installed']},
-        "Swimming pool": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
-        "Furnished": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
-        "HasFireplace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
-        "HasTerrace": {'type': 'str', 'optional': True, 'default': ['Yes','No']},
+        "Swimming pool": {'type': 'str', 'optional': True, 'default': ['Yes', 'No']},
+        "Furnished": {'type': 'str', 'optional': True, 'default': ['Yes', 'No']},
+        "HasFireplace": {'type': 'str', 'optional': True, 'default': ['Yes', 'No']},
+        "HasTerrace": {'type': 'str', 'optional': True, 'default': ['Yes', 'No']},
         "Terrace surface": {'type': 'int', 'optional': True, 'default': []},
         "Number of frontages": {'type': 'int', 'optional': True, 'default': []},
-        "Building condition": {'type': 'str', 'optional': True, 'default': ['As new','Good','To renovate']}
+        "Building condition": {'type': 'str', 'optional': True, 'default': ['As new', 'Good', 'To renovate']}
     }
 
     return dict_of_expected_outcome
-
 
 
 if __name__ == '__main__':
