@@ -13,7 +13,7 @@ from pathlib import Path
 
 class Model():
     def __init__(self, model_directory):
-        self.df = pd.read_csv('.data/immo_scrapped_data.csv')
+        self.df = pd.read_csv('/Users/cerenmorey/PycharmProjects/API-Deployment/data/immo_scrapped_data.csv')
         self.model_path = Path(model_directory)
         self.poly_features_model_path = Path(model_directory)
         if self.model_path.is_file():
