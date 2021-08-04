@@ -25,7 +25,11 @@ def predict():
     if regressor:
         try:
             json_ = request.json  # Take all available entries
-            json_ = preprocess(json_[0])  # preprocess the json file
+            print(type(json_))
+            if type(json_) == list:
+                json_ = preprocess(json_[0]) # preprocess the json file
+            else:
+                json_ = preprocess(json_)
             query = pd.DataFrame(json_)
             query = query.reindex(columns=model_columns, fill_value=0)
             # Convert column names to model's column names
