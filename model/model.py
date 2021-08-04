@@ -13,16 +13,17 @@ from pathlib import Path
 
 class Model():
     def __init__(self, model_directory):
-        self.df = pd.read_csv('/Users/cerenmorey/PycharmProjects/API-Deployment/data/immo_scrapped_data.csv')
-        self.model_path = Path(model_directory)
-        self.poly_features_model_path = Path(model_directory)
-        if self.model_path.is_file():
-            self.model_column_path = self.model_path.parent.joinpath("model_columns.pkl")
-        else:
+        self.df = pd.read_csv("/Users/cerenmorey/PycharmProjects/API-Deployment/data/immo_scrapped_data.csv")
+        self.model_name = "model.pkl"
+        self.model_column_name = "model_columns.pkl"
+        self.poly_feature_name = "poly_features.pkl"
+        self.model_path = Path(model_directory).joinpath(self.model_name)
+        self.poly_features_model_path = Path(model_directory).joinpath(self.poly_feature_name)
+        self.model_column_path = Path(model_directory).joinpath(self.model_column_name)
+        if not self.model_path.is_file():
             print("No models found, training new model.")
-            self.model, self.model_columns = self.train_model()
-            self.model_path = self.save_model()
-            self.model_column_path = self.save_model_columns()
+            self.model, self.model_columns, self.poly_features = self.train_model()
+            self.save_model()
 
     def clean_df(self):
         df = self.df
@@ -123,7 +124,7 @@ class Model():
 
         # elastic model and fitting
         elastic_model = ElasticNetCV(l1_ratio=1, tol=0.01)
-        return elastic_model.fit(poly_features_train, y_train), list(X.columns)
+        return elastic_model.fit(poly_features_train, y_train), list(X.columns), polynomial_converter
 
         # Testing model performance
         # y_pred_poly = elastic_model.predict(poly_features_test)
@@ -134,16 +135,12 @@ class Model():
 
     def save_model(self):
         # save the model
-        model_path = joblib.dump(self.model, 'model/model.pkl')[0]
-        poly_features_model_path = joblib.dump(self.poly_features, 'model/polynomial_features_model')[0]
+        print(self.model_path,self.poly_features_model_path,self.model_column_path)
+        joblib.dump(self.model, self.model_path)
+        joblib.dump(self.poly_features, self.poly_features_model_path)
+        joblib.dump(self.model_columns, self.model_column_path)
         print("Model saved")
-        return model_path, poly_features_model_path
 
-    def save_model_columns(self):
-        # Saving the data columns from training
-        model_columns_path = joblib.dump(self.model_columns, 'model/model_columns.pkl')[0]
-        print("Models columns dumped!", self.model_columns)
-        return model_columns_path
 
 # model_directory = '/Users/cerenmorey/PycharmProjects/API-Deployment/model/model.pkl'
 # model = Model(model_directory)

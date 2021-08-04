@@ -88,12 +88,13 @@ def str_format():
 
 if __name__ == '__main__':
     try:
-        model_directory = '/Users/cerenmorey/PycharmProjects/API-Deployment/model/model.pkl'
+        model_directory = '/Users/cerenmorey/PycharmProjects/API-Deployment/model/'
         model = Model(model_directory)
         model_file_path = model.model_path
         model_columns_file_path = model.model_column_path
+        poly_features_path = model.poly_features_model_path
 
-        load_poly = joblib.load('/Users/cerenmorey/PycharmProjects/API-Deployment/model/poly_features.pkl')
+        load_poly = joblib.load(poly_features_path)
         print("Poly features loaded")
 
         regressor = joblib.load(model_file_path)
