@@ -88,7 +88,7 @@ def str_format():
 
 if __name__ == '__main__':
     try:
-        model_directory = '/Users/cerenmorey/PycharmProjects/API-Deployment/model/'
+        model_directory = 'model/'
         model = Model(model_directory)
         model_file_path = model.model_path
         model_columns_file_path = model.model_column_path
